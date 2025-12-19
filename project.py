@@ -1,19 +1,26 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 
 def show_projects():
-    st.subheader("My Projects")
-    
-    # Sample project data
+    st.title("Projects")
+
     projects = [
-        {"name": "Project A", "description": "A machine learning project that predicts housing prices.", "technologies": "Python, Scikit-learn, Pandas"},
-        {"name": "Project B", "description": "A web application for visualizing COVID-19 data.", "technologies": "Streamlit, Plotly, Dash"},
-        {"name": "Project C", "description": "A deep learning model for image classification.", "technologies": "TensorFlow, Keras, OpenCV"},
+        {
+            "name": "HR Promotion Dashboard",
+            "description": "HR analytics dashboard for evaluating promotion readiness using RFM segmentation.",
+            "tools": "Python, Pandas, Plotly, Streamlit"
+        },
+        {
+            "name": "Project A",
+            "description": "Machine learning model to predict housing prices.",
+            "tools": "Python, Scikit-learn"
+        }
     ]
-    
-    for project in projects:
-        st.markdown(f"### {project['name']}")
-        st.write(project['description'])
-        st.markdown(f"**Technologies Used:** {project['technologies']}")
+
+    for p in projects:
+        if st.button(p["name"], key=p["name"]):
+            st.session_state.active_project = p["name"]
+            st.rerun()
+
+        st.write(p["description"])
+        st.markdown(f"**Tools:** {p['tools']}")
         st.markdown("---")
