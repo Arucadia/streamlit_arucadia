@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from pathlib import Path
 
 COLOR_MAP = {
     "Need Further Observation": "#FFD501",
@@ -25,26 +26,20 @@ def map_promotion_recency(x):
 
 def hr_dashboard():
 
+    BASE_DIR = Path(__file__).parent
     st.title("Employee Promotion Readiness Dashboard")
 
-    # ======================
-    # LOAD DATA
-    # ======================
-    df = pd.read_csv(r"D:\Data\Dibimbing\streamlit_arucadia\Dataset\hr_final.csv")
-    seg = pd.read_csv(r"D:\Data\Dibimbing\streamlit_arucadia\Dataset\hr_segment.csv")
+    df = pd.read_csv(BASE_DIR / "Dataset" / "hr_final.csv")
+    seg = pd.read_csv(BASE_DIR / "Dataset" / "hr_segment.csv")
 
-    # ======================
-    # MERGE DATASET (VALID)
-    # ======================
+
     df = df.merge(
         seg[["EmployeeID", "RFM_Segment", "F_Score", "M_Score"]],
         on="EmployeeID",
         how="left"
     )
 
-    # ======================
     # SIDEBAR FILTER
-    # ======================
     st.sidebar.header("Filters")
 
     dept = st.sidebar.multiselect(
@@ -65,9 +60,7 @@ def hr_dashboard():
         (df["Age"].between(age_range[0], age_range[1]))
     ]
 
-    # ======================
-    # KPI – READY FOR PROMOTION (DAX EQUIVALENT)
-    # ======================
+    # KPI – READY FOR PROMOTION
     total_emp = len(df_f)
     ready_emp = (df_f["RFM_Segment"] == "Recommend for Promotion").sum()
     ready_pct = (ready_emp / total_emp) * 100 if total_emp > 0 else 0
@@ -82,9 +75,7 @@ def hr_dashboard():
 
     st.divider()
 
-    # ======================
     # YEARS AT COMPANY (AREA)
-    # ======================
     left, right = st.columns(2)
 
     with left:
@@ -104,9 +95,7 @@ def hr_dashboard():
         )
         st.plotly_chart(fig_area, use_container_width=True)
 
-    # ======================
     # DONUT – RFM SEGMENT
-    # ======================
     with right:
         rfm_dist = (
             df_f["RFM_Segment"]
@@ -126,9 +115,7 @@ def hr_dashboard():
         )
         st.plotly_chart(fig_donut, use_container_width=True)
 
-    # ======================
     # PROMOTION RECENCY BAR
-    # ======================
     df_f["Promotion_Recency"] = df_f["YearsSinceLastPromotion"].apply(map_promotion_recency)
 
     recency_df = (
@@ -161,9 +148,7 @@ def hr_dashboard():
 
     st.divider()
 
-    # ======================
     # SCATTER – INDIVIDUAL LEVEL
-    # ======================
     left_s, right_s = st.columns(2)
 
     with left_s:
@@ -178,9 +163,7 @@ def hr_dashboard():
         )
         st.plotly_chart(fig_individual, use_container_width=True)
 
-    # ======================
     # SCATTER – SEGMENT LEVEL
-    # ======================
     with right_s:
         scatter_seg = (
             df_f
@@ -209,8 +192,6 @@ def hr_dashboard():
         )
         st.plotly_chart(fig_segment, use_container_width=True)
 
-    # ======================
     # DATA PREVIEW
-    # ======================
     st.subheader("Employee Data Preview")
     st.dataframe(df_f.head(20))
