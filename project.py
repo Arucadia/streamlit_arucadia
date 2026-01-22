@@ -10,9 +10,9 @@ def show_projects():
             "tools": "Python, Pandas, Plotly, Streamlit"
         },
         {
-            "name": "Project A",
-            "description": "Machine learning model to predict housing prices.",
-            "tools": "Python, Scikit-learn"
+            "name": "Machine Failure Prediction",
+            "description": "End-to-end machine learning project to predict machine failure using XGBoost, selected based on confusion matrix trade-off.",
+            "tools": "Python, Scikit-learn, XGBoost, Streamlit"
         }
     ]
 
