@@ -4,17 +4,22 @@ def show_projects():
     st.title("Projects")
 
     projects = [
-        {
-            "name": "HR Promotion Dashboard",
-            "description": "HR analytics dashboard for evaluating promotion readiness using RFM segmentation.",
-            "tools": "Python, Pandas, Plotly, Streamlit"
-        },
-        {
-            "name": "Machine Failure Prediction",
-            "description": "End-to-end machine learning project to predict machine failure using XGBoost, selected based on confusion matrix trade-off.",
-            "tools": "Python, Scikit-learn, XGBoost, Streamlit"
-        }
-    ]
+    {
+        "name": "HR Promotion Dashboard",
+        "description": "HR analytics dashboard for evaluating promotion readiness using RFM segmentation.",
+        "tools": "Python, Pandas, Plotly, Streamlit"
+    },
+    {
+        "name": "Machine Failure Prediction",
+        "description": "End-to-end machine learning project to predict machine failure using XGBoost, selected based on confusion matrix trade-off.",
+        "tools": "Python, Scikit-learn, XGBoost, Streamlit"
+    },
+    {
+        "name": "Delivery Time Prediction",
+        "description": "Regression model to predict food delivery time using Linear Regression pipeline with scaling and encoding.",
+        "tools": "Python, Scikit-learn, Streamlit"
+    }
+]
 
     for p in projects:
         if st.button(p["name"], key=p["name"]):

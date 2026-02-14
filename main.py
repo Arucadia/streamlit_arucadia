@@ -39,3 +39,7 @@ elif page == "Projects":
         elif st.session_state.active_project == "Machine Failure Prediction":
             from machine_failure_app import show_machine_failure
             show_machine_failure()
+
+        elif st.session_state.active_project == "Delivery Time Prediction":
+            from delivery_time_app import show_delivery_time
+            show_delivery_time()
